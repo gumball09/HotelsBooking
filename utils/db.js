@@ -9,7 +9,7 @@ const sequelize = new Sequelize(config.DB_NAME, config.DB_USERNAME, config.DB_PW
     dialectOptions: {
         ssl: { rejectUnauthorized: false }
     },
-    logging: false
+    logging: (...msg) => logger.info(msg)
 })
 
 module.exports = { sequelize }
