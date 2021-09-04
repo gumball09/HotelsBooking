@@ -1,0 +1,44 @@
+<h2>Sign Up</h2>
+<hr>
+{{#unless successMsg}}
+{{#if errorMsg}}
+    <div class="alert alert-danger"><strong>Error:</strong> {{errorMsg}}</div>
+{{/if}}
+<form method="post" action="/user/register">
+    <div>
+        {{#if errors.firstName}}
+        <div>{{errors.firstName}}</div>
+        {{/if}}
+        <input id="firstName" name="firstName" type="text" placeholder="First Name" required value="{{user.firstName}}" />
+    </div>
+    <div>
+        {{#if errors.lastName}}
+        <div>{{errors.lastName}}</div>
+        {{/if}}
+        <input id="lastName" name="lastName" type="text" placeholder="Last Name" required value="{{user.lastName}}" />
+    </div>
+    <div>
+        {{#if errors.email}}
+        <div>{{errors.email}}</div>
+        {{/if}}
+        <input id="email" name="email" type="email" placeholder="example@email.com" required value="{{user.email}}" />
+    </div>
+    <div>
+        {{#if errors.password}}
+        <div>{{errors.password}}</div>
+        {{/if}}
+        <input id="password" name="password" type="password" placeholder="Password" required />
+    </div>
+    <div>
+        <input id="password" name="confirmPassword" type="password" placeholder="Confirm Password" required />
+    </div>
+    <div>
+        <button type="submit">Sign Up</button>
+    </div>
+</form>
+{{else}}
+<div>{{successMsg}}</div>
+<a href="/user/login">
+    <button>Please sign in with your account</button>
+</a>
+{{/unless}}
