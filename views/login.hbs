@@ -5,20 +5,12 @@
     {{/if}}
     <form method="post" action="/user/login">
         <div>
-            <div>
-                <div>
-                    <input id="username" name="email" type="email" placeholder="Email" required value="{{userEmail}}" />
-                </div>
-            </div>
-        </div>
-        <div >
-            <div>
-                <div>
-                    <input id="password" name="password" type="password" placeholder="Password" required />
-                </div>
-            </div>
+            <input id="username" name="email" type="email" placeholder="Email" required value="{{userEmail}}" />
         </div>
         <div>
-            <input type="submit" value="Login" />
+            <input id="password" name="password" type="password" placeholder="Password" required />
+        </div>
+        <div>
+            <button type="submit">Login</button>
         </div>
     </form>
