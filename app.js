@@ -3,24 +3,15 @@ const exphbs = require('express-handlebars')
 const path = require('path')
 const helmet = require('helmet')
 const clientSessions = require('client-sessions')
+const expressSessions = require('express-session')
 // =================================================================
 const { SESSION_KEY } = require('./utils/config')
 const middleware = require('./utils/middleware')
 // =================================================================
+const homeRouter = require('./controllers/home')
 const userRouter = require('./controllers/user')
 
 const app = express()
-
-const User = require('./models/User')
-
-//User.createUser({
-    //firstName: 'Vivian',
-    //lastName: 'Pham',
-    //email: 'hpnpham@myseneca.ca',
-    //password: 'Couple2vs'
-//}).then(result => {
-    //console.log('Newly created user: ', result)
-//}).catch(err => console.log(err))
 
 // SERVER CONFIGURATIONS
 // Serve static files (CSS)
@@ -29,7 +20,14 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Increased security for HTTP headers
 app.use(helmet()) 
 
-// Use of sessions for authentication
+// Use of Express sessions
+app.use(expressSessions({
+    secret: 'gumball09',
+    saveUninitialized: false,
+    resave: true
+}))
+
+// Use of client sessions for authentication
 app.use(clientSessions({
     cookieName: "authentication",
     secret: SESSION_KEY,
@@ -61,6 +59,7 @@ app.engine('hbs', hbs.engine)
 app.use(middleware.requestLogger)
 
 // ===== USE OF ROUTES =====
+app.use('/', homeRouter)
 app.use('/user', userRouter)
 
 // UNKNOWN ENDPOINTS MIDDLEWARE: Handle unknown endpoints
