@@ -45,14 +45,14 @@ const User = sequelize.define("User", {
 
 const createUser = (data) => {
     return new Promise((resolve, reject) => {
-        bcrypt.hash(data.password, 10).then(result => {
-            logger.info('Password hash: ', result)
+        bcrypt.hash(data.password, 10).then(passwordHash => {
+            logger.info('Password hash: ', passwordHash)
 
             const user = {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 email: data.email,
-                passwordHash: result
+                passwordHash
             }
 
             User.create(user, { raw: true }).then(result => {
@@ -68,16 +68,22 @@ const createUser = (data) => {
 
 const findUser = (data) => {
     return new Promise((resolve, reject) => {
-        User.findOne({ where: {
-            email: data.email
-        }}, { raw: true }).then(user => {
+        User.findOne({ 
+            where: {
+                email: data.email
+            }
+        }, { raw: true }).then(user => {
             if(!user.dataValues) {
                 reject('User not found!')
             } else {
                 bcrypt.compare(data.password, user.dataValues.passwordHash, (error, result) => {
                     // if result === true
                     if(result) {
-                        resolve(user.dataValues)
+                        resolve({
+                            firstName: user.dataValues.firstName,
+                            lastName: user.dataValues.lastName,
+                            email: user.dataValues.email
+                        })
                     } else {
                         reject('Password does not match')
                     }
