@@ -1,7 +1,7 @@
 # HotelsBooking
 
 # INTRODUCTION
-This is a host repository for server-side application `HotelsBooking` 
+This is a host repository for server-side application `HotelsBooking`\
 **Progress: on-going**
 
 ### Users can:
